@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Dodaj wydatek{% endblock %}
+
+
+
+{% block body %}
+	
+	<div id="main">
+	
+		<div id="title">Podaj dane:</div>
+		
+		<form method="post" action="/expense/create" id="formIncome">
+		
+			<div><input type="number" class="inputfield" step="0.01" min="0" placeholder="kwota" onfocus="this.placeholder=''" onblur="this.placeholder='kwota'" name="amount" required></div>
+				
+			<div><input type="date" class="inputfield" name="date" required></div>
+			
+			<legend>Sposób płatności</legend>
+			
+			{% for i in payment_methods_category %}
+				<div><label><input type="radio" name="payment_method" value="{{ i.id }}" required>{{ i.payment_name }}</label></div>
+			{% endfor %}
+				
+			<legend>Kategoria</legend>
+			
+			{% for i in expenses_category %}
+				<div><label><input type="radio" name="category" value="{{ i.id }}" required>{{ i.name }}</label></div>
+			{% endfor %}
+			
+			<div><input type="text" class="inputfield" placeholder="komentarz (opcjonalnie)" onfocus="this.placeholder=''" onblur="this.placeholder='komentarz (opcjonalnie)'" name="comment"></div>
+								
+			<div><input type="submit" class="pushbutton" id="ok_pushbutton" value="Dodaj"></div>			
+		
+		</form>
+
+	</div>
+	
+	
+{% endblock %}

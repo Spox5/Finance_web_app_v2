@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+
+{% block footer %}
+
+	<!-- pie chart -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Rodzaj', 'Kwota'],
+			{% block piechart_js %}
+			{% endblock %}
+			
+        ]);
+
+        var options = {
+          title: 'Wydatki',
+		  backgroundColor: '#F5F5F5',
+		  width: '500',
+		  height: '300'
+		  
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+		
+			chart.draw(data, options);
+		}
+		
+    </script>
+	
+{% endblock %}
+
+
+{% block body %}
+
+	<div id="main">
+	
+		<div id="title">{% block title_period %}{% endblock %}</div>
+		
+		<div class="table1">
+			<table>
+				<tr>
+					<th colspan="4">Przychody</th>
+				</tr>
+				<tr>
+					<td><b>Kategoria</b></td>
+					<td><b>Wysokość</b></td>
+					<td><b>Data</b></td>
+					<td><b>Komentarz</b></td>
+				</tr>
+				
+				{% block incomes %} {% endblock %}
+				
+			</table>
+		</div>
+		
+		<div class="table1">
+			<table>
+				<tr>
+					<th colspan="5">Wydatki</th>
+				</tr>
+				<tr>
+					<td><b>Kategoria</b></td>
+					<td><b>Płatność</b></td>
+					<td><b>Wysokość</b></td>
+					<td><b>Data</b></td>
+					<td><b>Komentarz</b></td>
+				</tr>
+				
+				{% block expenses %} {% endblock %}
+				
+			</table>
+		</div>
+		
+		<div class="summary">Podsumowanie bilansu: 
+		
+			{% block balance_summary %} {% endblock %} zł.
+		
+			{% block balance_message %} {% endblock %}
+		
+		</div>
+		
+		<div id="piechart"></div>
+	
+	</div>
+	
+{% endblock %}

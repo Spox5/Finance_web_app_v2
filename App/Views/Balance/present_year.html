@@ -1,0 +1,67 @@
+{% extends "base_balance.html" %}
+
+
+{% block title %} Bilans - bieżący rok {% endblock %}
+
+
+{% block title_period %}
+
+	<div id="title">Bieżący rok:</div> 
+
+{% endblock %}
+
+
+{% block incomes %}
+
+	{% for i in balance_incomes_present_year %}
+		<tr> 
+			<td>{{ i.name }}</td>
+			<td>{{ i.amount }}</td>
+			<td>{{ i.date_of_income }}</td>
+			<td>{{ i.income_comment }}</td>
+		</tr> 
+	{% endfor %}
+
+{% endblock %}
+
+
+{% block expenses %}
+
+	{% for i in balance_expenses_present_year %}
+		<tr> 
+			<td>{{ i.name }}</td>
+			<td>{{ i.payment_name }}</td>
+			<td>{{ i.amount }}</td>
+			<td>{{ i.date_of_expense }}</td>
+			<td>{{ i.expense_comment }}</td>
+		</tr> 
+	{% endfor %}
+	
+{% endblock %}
+
+
+{% block balance_summary %}
+
+	{{ balance_sum_present_year }}
+
+{% endblock %}
+
+
+{% block balance_message %}
+
+	{% for message in summary_message_present_year %}
+		<div class="summary summary-{{ message.type }}">
+			{{ message.body }}
+		</div>
+	{% endfor %}
+
+{% endblock %}
+
+
+{% block piechart_js %}
+
+	{% for data in piechart_present_year %} 
+		['{{ data.name }}', {{ data.sum }}],
+	{% endfor %}
+	
+{% endblock %}

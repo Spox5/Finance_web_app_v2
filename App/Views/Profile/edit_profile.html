@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Edycja profilu{% endblock %}
+
+{% block footer %}
+	
+	<!-- simple script about show password button -->
+	<script src="/js/hideShowPassword.min.js"></script>
+	<script src="/js/app.js"></script>
+
+	<script>
+	
+		$(document).ready(function() {
+		
+			var userId = '{{ user.id }}';
+			
+			$('#formProfile').validate({
+				
+				rules: {
+					name: 'required',
+					email: {
+						required: true,
+						email: true,
+						remote: {
+							url: '/account/validate-email',
+							data: { 
+								ignore_id: function() {
+									return userId;
+								}
+							}
+						}
+					},
+					password: {
+						minlength: 6,
+						validPassword: true
+					}/*,	if want password confirmation field just uncomment
+					password_confirmation: {
+						equalTo: '#inputPassword'
+					}*/
+				},
+				messages: {
+					email: {
+						remote: 'Podany adres e-mail jest już zajęty'
+					}
+				}
+				
+			});
+		
+			//Show password button
+			$('#inputPassword').hideShowPassword({
+				show: false,
+				innerToggle: 'focus'
+			});
+		
+		});
+		
+	</script>
+	
+{% endblock %}
+
+{% block body %}
+
+	<div id="main">
+	
+		{% if user.errors is not empty %}
+			<p>Błędy:</p>
+			<ul>
+				{% for error in user.errors %}
+					<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	
+		<div id="title">Edycja profilu</div>
+		
+		<form method="post" id="formProfile" action="/profile/update">
+		
+			<div>
+				<label for="inputName">Imię</label>
+				<input id="inputName" class="inputfield" name="name" placeholder="Imię" value="{{ user.name }}" required />
+			</div>
+			
+			<div>
+				<label for="inputEmail">E-mail</label>
+				<input id="inputEmail" class="inputfield" name="email" placeholder="E-mail" value="{{ user.email }}" required type="email"/>
+			</div>
+			
+			<div>
+				<label for="inputPassword">Hasło</label>
+				<input type ="password" class="inputfield" id="inputPassword" name="password" placeholder="Hasło" aria-describedby="helpBlock"/>
+				<span id="helpBlock">Zostaw pole puste, jeżeli nie chcesz zmieniać hasła</span>
+			</div>
+
+			<button type="submit">Zapisz</button>
+			<a href="/profile/show">Anuluj</a>
+			
+		</form>
+		
+	</div>
+
+{% endblock %}

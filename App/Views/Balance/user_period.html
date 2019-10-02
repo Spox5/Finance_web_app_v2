@@ -1,0 +1,67 @@
+{% extends "base_balance.html" %}
+
+
+{% block title %}Bilans - wybrany okres{% endblock %}
+
+
+{% block title_period %}
+
+	<div id="title">Wybrany okres: {{ balance_date1 }} - {{ balance_date2 }}</div>
+	
+{% endblock %}
+
+
+{% block incomes %}
+
+	{% for i in balance_incomes_user_period %}
+		<tr> 
+			<td>{{ i.name }}</td>
+			<td>{{ i.amount }}</td>
+			<td>{{ i.date_of_income }}</td>
+			<td>{{ i.income_comment }}</td>
+		</tr> 
+	{% endfor %}
+			
+{% endblock %}
+
+
+{% block expenses %}
+
+	{% for i in balance_expenses_user_period %}
+		<tr> 
+			<td>{{ i.name }}</td>
+			<td>{{ i.payment_name }}</td>
+			<td>{{ i.amount }}</td>
+			<td>{{ i.date_of_expense }}</td>
+			<td>{{ i.expense_comment }}</td>
+		</tr> 
+	{% endfor %}
+	
+{% endblock %}
+
+
+{% block balance_summary %}
+
+	{{ balance_sum_user_period }}
+
+{% endblock %}
+
+
+{% block balance_message %}
+
+	{% for message in summary_message_user_period %}
+		<div class="summary summary-{{ message.type }}">
+			{{ message.body }}
+		</div>
+	{% endfor %}
+
+{% endblock %}
+
+
+{% block piechart_js %}
+
+	{% for data in piechart_user_period %} 
+		['{{ data.name }}', {{ data.sum }}],
+	{% endfor %}
+	
+{% endblock %}

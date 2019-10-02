@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Lato&display=swap&subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="/css/styles.css" />
+	<link rel="stylesheet" href="/css/fontello.css" type="text/css" />
+</head>
+<body>
+
+	<div class="container-fluid">
+	
+		<!-----------------------USER'S PERIOD BALANCE FORM-------------------------------------
+		*
+		*
+		------------------------------------------------------------------------------->
+		<div class="modal fade" id="periodDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Podaj datę</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				  </div>
+				  <div class="modal-body">
+					<form action="/balance/userPeriod" method="post">
+					  <div class="form-group">
+						<label class="col-form-label">Podaj zakres dat, którego ma dotyczyć bilans.</label>
+						<label>Od: <input type="date" class="form-control" name="date1"></label>
+						<label>Do: <input type="date" class="form-control" name="date2"></label>
+					  </div>
+					
+					</div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-modal-cancel" data-dismiss="modal">Anuluj</button>
+						<button type="submit" class="btn btn-modal-ok">Akceptuj</button>
+					  </div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-----------------------------------------------------------------------------------
+		------------------------------------------------------------------------------------>
+	
+		<header>
+			<div class="header">
+				<i class="icon-money"></i><b>Przyszły milioner</b>
+			</div>
+		</header>
+
+		
+		{% if current_user %}
+			
+			{% block nav %}
+			
+				<nav class="navbar navbar-expand-lg">
+			
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Navigation switch">
+					<i id="hamburger-icon" class="icon-menu"></i>
+				</button>
+				
+				<div  class="collapse navbar-collapse" id="mainmenu">
+				
+					<ul class="navbar-nav mx-auto nav">
+					
+						<li class="nav-item">
+							<a class="nav-link" href="/welcome/welcome">
+								<i class="icon-home"></i>Strona główna
+							</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="/income/income">
+								<i class="icon-dollar"></i>Dodaj przychód
+							</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link" href="/expense/expense">
+								<i class="icon-basket"></i>Dodaj wydatek
+							</a>
+						</li>
+						
+						<li class="nav-item dropdown">
+
+							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true">
+							
+								<i class="icon-calendar"></i>Pokaż bilans
+							
+							</a>
+							
+							<div class="dropdown-menu" aria-labelledby="submenu">
+							
+								<a class="dropdown-item" href="/balance/currentMonth">Bieżący miesiąc</a>
+								
+								<a class="dropdown-item" href="/balance/previousMonth">Poprzedni miesiąc</a>
+								
+								<a class="dropdown-item" href="/balance/presentYear">Bieżący rok</a>
+								
+								<div class="dropdown-divider"></div>
+								
+								<div>Niestandardowe
+								
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#periodDate">Podaj datę</button>
+									
+								</div>
+							
+							</div>
+						
+						</li>
+						
+						<li class="nav-item"><a class="nav-link" href="/profile/show"><i class="icon-wrench"></i>Ustawienia</a></li>
+						
+						<li class="nav-item"><a class="nav-link" href="/logout"><i class="icon-logout"></i>Wyloguj</a></li>
+						
+					</ul>
+				
+				</div>
+				
+				</nav>
+				
+			{% endblock %}
+			
+		{%  endif %}
+		
+		{% for message in flash_messages %}
+			<div class="alert alert-{{ message.type }}">
+				{{ message.body }}
+			</div>
+		{% endfor %}
+		
+		{% block body %}
+		{% endblock %}
+	
+	</div>
+	
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+	
+	<script src="/js/bootstrap.min.js"></script>
+	
+	{% block footer %}
+	{% endblock %}
+
+</body>
+</html>

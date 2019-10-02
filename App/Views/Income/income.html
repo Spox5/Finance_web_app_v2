@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Dodaj przychód{% endblock %}
+
+{% block body %}
+	
+	<div id="main">
+	
+		<div id="title">Podaj dane:</div>
+		
+		<form method="post" action="/income/create" id="formIncome">
+		
+			<div><input type="number" class="inputfield" step="0.01" min="0" placeholder="kwota" onfocus="this.placeholder=''" onblur="this.placeholder='kwota'" name="amount" required></div>
+				
+			<div><input type="date" class="inputfield" name="date" required></div>
+				
+			<legend>Kategoria</legend>
+			
+			{% for i in incomes_category %}
+				<div><label><input type="radio" name="category" value="{{ i.id }}" required>{{ i.name }}</label></div>
+			{% endfor %}
+			
+			<div><input type="text" class="inputfield" placeholder="komentarz (opcjonalnie)" onfocus="this.placeholder=''" onblur="this.placeholder='komentarz (opcjonalnie)'" name="comment"></div>
+								
+			<div><input type="submit" class="pushbutton" id="ok_pushbutton" value="Dodaj"></div>
+							
+		</form>
+
+	</div>
+	
+	
+{% endblock %}

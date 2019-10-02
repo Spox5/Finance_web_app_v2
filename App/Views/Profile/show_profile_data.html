@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Ustawienia{% endblock %}
+
+{% block body %}
+
+	<div id="main">
+
+		<div id="title">Twój profil</div>
+		
+		<dl>
+			<dt>Imię</dt>
+			<dd>{{ user.name }}</dd>
+			<dt>E-mail</dt>
+			<dd>{{ user.email }}</dd>
+		</dl>
+		
+		<a href="/profile/edit">Edycja</a>
+		
+	</div>
+	
+{% endblock %}

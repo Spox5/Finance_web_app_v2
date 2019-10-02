@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block footer %}
+	
+	<!-- simple script about show password button -->
+	<script src="/js/hideShowPassword.min.js"></script>
+	<script src="/js/app.js"></script>
+	
+	<script>
+	
+		$(document).ready(function() {
+			
+			$('#formPasswordReset').validate({
+				
+				rules: {
+					password: {
+						required: true,
+						minlength: 6,
+						validPassword: true
+					}/*,	if want password confirmation field just uncomment
+					password_confirmation: {
+						equalTo: '#inputPassword'
+					}*/
+				}
+			});
+		
+			//Show password button
+			$('#inputPassword').hideShowPassword({
+				show: false,
+				innerToggle: 'focus'
+			});
+		
+		});
+		
+	</script>
+	
+{% endblock %}
+
+{% block body %}
+	
+    <h1>Resetowanie hasła</h1>
+	
+	{% if user.errors is not empty %}
+		<p>Błędy:</p>
+		<ul>
+			{% for error in user.errors %}
+				<li>{{ error }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	
+	<form method="post" id="formPasswordReset" action="/password/reset-password">
+		
+		<input type="hidden" name="token" value="{{ token }}" />
+		
+		<div>
+			<label for="inputPassword">Hasło</label>
+			<input type ="password" id="inputPassword" name="password" placeholder="Hasło" required />
+		</div>
+
+		<button type="submit">Resetuj hasło</button>
+		
+	</form>
+
+{% endblock %}

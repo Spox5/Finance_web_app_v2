@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block footer %}
+	
+	<!-- simple script about show password button -->
+	<script src="/js/hideShowPassword.min.js"></script>
+	<script src="/js/app.js"></script>
+
+	<script>
+	
+		$(document).ready(function() {
+			
+			$('#formSignup').validate({
+				errorElement: 'div',
+				rules: {
+					name: 'required',
+					email: {
+						required: true,
+						email: true,
+						remote: '/account/validate-email'
+					},
+					password: {
+						required: true,
+						minlength: 6,
+						validPassword: true
+					}/*,	if want password confirmation field just uncomment
+					password_confirmation: {
+						equalTo: '#inputPassword'
+					}*/
+				},
+				messages: {
+					email: {
+						remote: 'Podany adres e-mail jest już zajęty',
+						required: 'Podaj adres e-mail',
+						email: 'Podaj poprawny e-mail'
+					},
+					name: 'Podaj imię',
+					password: {
+						required: 'Podaj hasło',
+						minlength: 'Hasło musi posiadać co najmniej 5 znaków',
+						validPassword: 'Hasło musi posiadać co najmniej 1 literę i cyfrę'
+					}
+				}
+				
+			});
+		
+			//Show password button
+			/*$('#inputPassword').hideShowPassword({
+				show: false,
+				innerToggle: 'focus',
+				states: {
+					shown: {
+						toggle: {
+							content: 'Ukryj'
+						}
+					},
+					hidden: {
+						toggle: {
+							content: 'Pokaż'
+						}
+					}
+				}
+				
+			})*/;
+		
+		});
+	</script>
+	
+	
+	<script>
+	function myFunction() {
+	  var x = document.getElementById("inputPassword");
+	  if (x.type === "password") {
+		x.type = "text";
+	  } else {
+		x.type = "password";
+		}
+	}
+	</script>}-->
+		
+	
+	
+{% endblock %}
+
+{% block body %}
+
+	<div id="main">
+	
+		<p>Kiedy pierwszy raz zacząłem na poważnie zarządzać swoimi finansami odkryłem, ile tak naprawdę wydaję, lub też, o ilu rzeczach zupełnie zapomniałem. W ciągu miesiąca "małe wydatki" urosły łącznie do kwoty kilkuset złotych, których w ogóle nie zauważyłem. Potem zastanawiałem się, dlaczego środki na koncie stoją w miejscu mimo pozornej próby oszczędzania i gdzie jest teraz część zarobionych pieniędzy. Jednak odkrycie newralgicznych punktów i uszczelnienie niekontrolowanego odpływu gotówki pokazało mi, ile jestem w stanie zaoszczędzić i zmotywowało mnie do dalszego zgłębiania tematu zarządania finansami.</p>
+		
+		
+		{% if user.errors is not empty %}
+			<p>Błędy:</p>
+			<ul>
+				{% for error in user.errors %}
+					<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+		
+		<div class="reg_log_form">
+			<h1>Zarejestruj się</h1>
+		
+			<form method="post" action="/signup/create" id="formSignup">
+			
+				<div>
+					<!--<label for="inputName">Imię</label>-->
+					<input type="text" class="inputfield" id="inputName" name="name" placeholder="Imię" value="{{ user.name }}" required />
+				</div>
+				
+				<div>
+					<input id="inputEmail" class="inputfield" name="email" placeholder="E-mail" value="{{ user.email }}" required type="email"/>
+				</div>
+				
+				<div>
+					<input type ="password" class="inputfield" id="inputPassword" name="password" placeholder="Hasło" required />
+					<div id="checkbox">
+						<label>
+							<input type="checkbox" onclick="myFunction()">Pokaż hasło</div>
+						</label>
+					</div>
+
+				<!-- password confirmation field - if want that just uncomment and delete show password button
+				<div>
+					<label for="inputPasswordConfirmation">Powtórz hasło</label>
+					<input type="password" id="inputPasswordConfirmation" name="password_confirmation" placeholder="Powtórz hasło" required />
+				</div>
+				-->
+				<button type="submit" class="pushbutton" id="register_pushbutton">Zarejestruj się</button>
+				
+			</form>
+		
+		</div>
+		
+		
+		<div class="reg_log_form">
+			<h1>Zaloguj się</h1>
+			
+			<form action="/login/create" method="post">
+			
+				<div>
+					<input type="email" class="inputfield" id="inputEmail" name="email" placeholder="E-mail" value="{{ email }} " autofocus />
+				</div>
+				<div>
+					<input type="password" class="inputfield" id="inputPassword" name="password" placeholder="Hasło" />
+				</div>
+				<button type="submit" class="pushbutton" id="login_pushbutton">Zaloguj się</button>
+				<div id="checkbox">
+					<label>
+						<input type="checkbox" name="remember_me" {% if remember_me %} checked="checked" {% endif %}/> Zapamiętaj mnie
+					</label>
+					<div><a href="/password/forgot">Zapomniałeś hasła?</a></div>
+				</div>
+				
+				
+			</form>
+		</div>
+		<div style="clear:both"></div>
+		
+	</div>
+
+{% endblock %}
