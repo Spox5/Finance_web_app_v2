@@ -2,35 +2,100 @@
 
 {% block title %}Dodaj wydatek{% endblock %}
 
+{% block footer %}
 
+	<script>
+
+		function foo() {
+		var amount = $("#amount").val();
+				
+		var category_id = $("input[name='category']:checked").val();
+				
+		$.ajax({
+			url: "expenses_limit.php",
+			method: "post",
+			
+			data: {
+				category_id_ajax: category_id,
+				amount_ajax: amount
+			},
+			
+			success: function(data, status)
+			{
+				var Table = "<table><tr><th>Limit</th><th>Dotychczas wydano</th><th>Różnica</th><th>Wydatki + wpisana kwota</th></tr><tr><th>"+data.limit+"</th><th>"+data.suma+"</th><th>"+data.roznica+"</th><th>"+data.wynik+"</tr></table>";
+				
+				$("#amount_control").html(Table);
+				
+				if (data.wynik <= data.limit) {
+					$("#amount_control").css({"color":"green"});
+					$("#amount_control").css({"display":"block"});
+				}
+				else {
+					$("#amount_control").css({"color":"red"});
+					$("#amount_control").css({"display":"block"});
+				}
+			}
+			
+		});
+
+		}
+		
+		$(document).ready(function() {
+			
+			$(":radio").change(function() {
+				
+				foo();
+			});
+		
+			$("#amount").bind('keyup mouseup', (function() {
+				foo();
+			}));
+		
+		});		
+	
+	</script>
+
+{% endblock %}
 
 {% block body %}
 	
 	<div id="main">
 	
+		<div id="expense_control"></div>
+	
 		<div id="title">Podaj dane:</div>
 		
 		<form method="post" action="/expense/create" id="formIncome">
 		
-			<div><input type="number" class="inputfield" step="0.01" min="0" placeholder="kwota" onfocus="this.placeholder=''" onblur="this.placeholder='kwota'" name="amount" required></div>
+			<div><input type="number" id="expense_amount" class="inputfield" step="0.01" min="0" placeholder="kwota" onfocus="this.placeholder=''" onblur="this.placeholder='kwota'" name="amount" required></div>
 				
 			<div><input type="date" class="inputfield" name="date" required></div>
 			
 			<legend>Sposób płatności</legend>
 			
 			{% for i in payment_methods_category %}
-				<div><label><input type="radio" name="payment_method" value="{{ i.id }}" required>{{ i.payment_name }}</label></div>
+				<!--<div><label><input type="radio" name="payment_method" value="{{ i.id }}" required>{{ i.payment_name }}</label></div>-->
+				<div class="btn-group">
+					<label class="btn btn-outline-secondary">
+						<input type="radio" name="payment_method" value="{{ i.id }}" required> {{ i.payment_name }}
+					</label>
+				</div>
 			{% endfor %}
 				
 			<legend>Kategoria</legend>
 			
 			{% for i in expenses_category %}
-				<div><label><input type="radio" name="category" value="{{ i.id }}" required>{{ i.name }}</label></div>
+				<!--<div><label><input type="radio" name="category" value="{{ i.id }}" required>{{ i.name }}</label></div>-->
+				<div class="btn-group">
+					<label class="btn btn-outline-secondary">
+						<input type="radio" name="category" value="{{ i.id }}" required> {{ i. name}}
+					</label>
+				</div>
 			{% endfor %}
 			
 			<div><input type="text" class="inputfield" placeholder="komentarz (opcjonalnie)" onfocus="this.placeholder=''" onblur="this.placeholder='komentarz (opcjonalnie)'" name="comment"></div>
 								
-			<div><input type="submit" class="pushbutton" id="ok_pushbutton" value="Dodaj"></div>			
+			<div><input type="submit" class="pushbutton ok_pushbutton" value="Dodaj"></div>			
 		
 		</form>
 

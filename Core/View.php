@@ -91,9 +91,9 @@ class View
 			$twig->addGlobal('balance_sum_user_period', \App\BalanceSum::getSumUserPeriod());
 			$twig->addGlobal('summary_message_user_period', \App\BalanceSummaryMessage::getMessagesUserPeriod());
 			$twig->addGlobal('piechart_user_period', \App\Piechart::getPieChartUserPeriod());
-			/////////////////////////////////END//////////////////////////////////////////////
+			/////////////////////////////////END BALANCE ///////////////////////////////////////
 			
-			//////////////////////////////////SETTINGS////////////////////////////////////////
+			
 			
         }
 

@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block title %}Ustawienia{% endblock %}
+
+{% block footer %}
+
+	<script>
+		
+		$("#edit_expense_button").on('click', function(){
+		
+			var category_val = $("input[name='category']:checked").val();
+			var category_label_id = "#label_" + category_val;
+			
+			var category_label = $(category_label_id).text();
+			
+			if (category_val) {
+			
+				$('#my_modal').modal('show');
+				
+				document.getElementById("category_name_header").innerHTML = category_label; 	 
+				document.getElementById("category_id").value = category_val;
+
+				var limit_amount = document.getElementById(category_val + "_limit_message");
+				
+				$('#amount_limit').val(null);
+				
+				if (limit_amount.innerText != '') {
+				
+					
+				
+					document.getElementById("amount_limit").value = limit_amount.innerText;
+					
+					$('#set_amount_limit').prop("checked", true);
+					
+					$('#amount_limit').removeAttr("disabled");
+				
+				} else {
+				
+					$('#set_amount_limit').prop("checked", false);
+				
+					document.getElementById("amount_limit").value = null;
+					
+					$('#amount_limit').attr("disabled", true);
+				}
+			}
+		});
+				
+	</script>
+	
+	<script>
+	
+		$(document).ready(function() {
+			$('#set_amount_limit').change(function() {
+				if(this.checked == true) {
+					alert('lll');
+					var category_val = $("input[name='category']:checked").val();
+					var limit_amount = document.getElementById(category_val + "_limit_message");
+			
+					$('#amount_limit').removeAttr("disabled");
+					$('#amount_limit').val(limit_amount.innerText);
+					$('#amount_limit').focus();
+				} else {
+					$('#amount_limit').prop("disabled", true);
+					$('#amount_limit').val(null);
+				}
+			});
+		});
+				
+		
+	</script>
+	
+	<!--<script>
+	
+		$("#unset_amount_limit").on('click', function() {
+		
+			$('#amount_limit').attr("disabled", true);
+			$('#amount_limit').val(null);
+		
+		});
+		
+		$("#set_amount_limit").on('click', function() {
+		
+			var category_val = $("input[name='category']:checked").val();
+			var limit_amount = document.getElementById(category_val + "_limit_message");
+			
+			$('#amount_limit').removeAttr("disabled");
+			$('#amount_limit').val(limit_amount.innerText);
+			$('#amount_limit').focus();
+			
+		});
+		
+	</script>-->
+	
+
+
+{% endblock %}
+
+{% block body %}
+
+	<div class="modal" id="my_modal">
+	
+		<div class="modal-dialog">
+		
+			<div class="modal-content">
+			
+				<div class="modal-header">
+				
+					<h4 class="modal-title">Edytuj kategorię o nazwie: <p id="category_name_header"></p></h4>
+					
+					<button type="button" id="close_modal_button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					
+				</div>
+				
+				<form action="/expensesettings/editExpenseCategory" method="post">
+				
+					<div class="modal-body">
+					
+						<input id="new_category_name" type="text" name="new_name" class="inputfield" placeholder="Nazwa kategorii"/>
+						
+						<input id="category_id" type="hidden" name="category_id" required/>
+						
+						<div style="margin-top: 15px">
+						
+							<label><input id="set_amount_limit" type="checkbox" name="set_amount_limit"/>Limit włączony</label>
+							
+							<!--<label><input id="unset_amount_limit" type="radio" name="set_amount_limit"/>Limit wyłączony</label>-->
+						
+							<input id="amount_limit" type="number" name="amount_limit" class="inputfield" placeholder="Limit wydatków" disabled/>
+							
+						</div>
+						
+					</div>
+					
+					<div class="modal-footer">
+					
+						<button type="submit" class="btn btn-default" >Akceptuj</button>
+						
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+
+		<div id="title">Kategorie wydatków</div>
+		
+		<form action="/expensesettings/deleteExpenseCategory" method="post">
+		
+			<div class="settings_field">
+		
+				<legend>Istniejące kategorie</legend> 
+				
+				{% for i in expenses_category %}
+					<div class="btn-group">
+					
+						<label id="label_{{ i.id }}" class="btn btn-outline-secondary">
+							
+							<input id = "{{ i.id }}" type="radio" name="category" value="{{ i.id }}" data-book-id="{{ i.name }}" required> {{ i.name }}
+							
+							<div id="{{ i.id }}_limit_message">{{ i.amount_limit }}</div>
+							
+						</label>
+						
+					</div>
+				{% endfor %}
+				
+				<div>
+					<input id="edit_expense_button" type="button" class="pushbutton ok_pushbutton" value="Edytuj">
+				
+					<input type="submit" class="pushbutton delete_pushbutton" value="Usuń">
+				</div>
+			
+			</div>
+		
+		</form>
+		
+		<form action="/expensesettings/addExpenseCategory" method="post">
+		
+			<div class="settings_field">
+		
+				<legend>Nowa kategoria</legend> 
+				
+				<input type="text" class="inputfield" placeholder="Nazwa nowej kategorii" onfocus="this.placeholder=''" onblur="this.placeholder='Nazwa nowej kategorii'" name="new_category" required> 
+				
+				<input type="submit" class="pushbutton ok_pushbutton" value="Dodaj">
+				
+			</div>
+			
+		</form>
+		
+	</div>
+	
+{% endblock %}
