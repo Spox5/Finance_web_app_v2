@@ -23,31 +23,50 @@ class IncomeSettings extends Authenticated
 			
 			Flash::addMessage('Kategoria została dodana.');
 			
-			$this->redirect('/income/success');
+			$this->redirect('/incomesettings/success');
 		
 		} else {
 			
 			Flash::addMessage('Wystąpił problem z dodaniem kategorii. Spróbuj ponownie.', Flash::WARNING);
 			
-			$this->redirect('/income/failed');
+			$this->redirect('/incomesettings/failed');
 		}
 	}
 	
 	public function deleteIncomeCategoryAction()
 	{
-		$newCategory = new SettingsModel($_POST);
+		$deleteCategory = new SettingsModel($_POST);
 		
-		if ($newCategory->deleteIncomeCategory ($_SESSION['user_id'])) {
+		if ($deleteCategory->deleteIncomeCategory ($_SESSION['user_id'])) {
 			
 			Flash::addMessage('Kategoria została usunięta.');
 			
-			$this->redirect('/income/success');
+			$this->redirect('/incomesettings/success');
 		
 		} else {
 			
-			Flash::addMessage('Wystąpił problem z dodaniem kategorii. Spróbuj ponownie.', Flash::WARNING);
+			Flash::addMessage('Wystąpił problem z usunięciem kategorii. Spróbuj ponownie.', Flash::WARNING);
 			
-			$this->redirect('/income/failed');
+			$this->redirect('/incomesettings/failed');
+		}
+	}
+	
+	public function editIncomeCategoryAction()
+	{
+		$editCategory = new SettingsModel($_POST);
+		
+		if ($editCategory->editIncomeCategory ($_SESSION['user_id'])) {
+			
+			Flash::addMessage('Kategoria została edytowana.');
+			
+			$this->redirect('/incomesettings/success');
+			
+		} else {
+			
+			Flash::addMessage('Wystąpił problem z edytowaniem kategorii. Spróbuj ponownie.', Flash::WARNING);
+			
+			$this->redirect('/incomesettings/failed');
+			
 		}
 	}
 	

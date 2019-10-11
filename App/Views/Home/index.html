@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Strona startowa{% endblock %}
 
 {% block footer %}
 	
@@ -128,7 +128,7 @@
 					<input type="password" id="inputPasswordConfirmation" name="password_confirmation" placeholder="Powtórz hasło" required />
 				</div>
 				-->
-				<button type="submit" class="pushbutton" id="register_pushbutton">Zarejestruj się</button>
+				<button type="submit" class="pushbutton register_pushbutton">Zarejestruj się</button>
 				
 			</form>
 		
@@ -146,7 +146,7 @@
 				<div>
 					<input type="password" class="inputfield" id="inputPassword" name="password" placeholder="Hasło" />
 				</div>
-				<button type="submit" class="pushbutton" id="login_pushbutton">Zaloguj się</button>
+				<button type="submit" class="pushbutton login_pushbutton">Zaloguj się</button>
 				<div id="checkbox">
 					<label>
 						<input type="checkbox" name="remember_me" {% if remember_me %} checked="checked" {% endif %}/> Zapamiętaj mnie

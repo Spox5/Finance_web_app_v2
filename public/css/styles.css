@@ -1,3 +1,5 @@
+
+
 body {
 	background-color: #F5F5F5;
 	color: black;
@@ -88,7 +90,7 @@ body {
 	padding: 5px;
 	box-sizing: border-box;
 	outline: none;
-	margin-top: 15px;
+	margin: 5px 5px 5px 5px;
 }
 
 .inputfield:focus
@@ -107,51 +109,63 @@ body {
 .pushbutton
 {
 	width: 300px;
-	font-size: 20px;
+	font-size: 17px;
 	color: white;
-	padding: 10px 5px;
+	padding: 7px;
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
 	letter-spacing: 1px;
 	outline: none;
 	transition: background-color 0.2s ease-in-out;
+	margin: 5px 5px 5px 5px;
 }
 
-#register_pushbutton
+.ok_pushbutton
+{
+	background-color: #0066ff;
+	
+}
+
+.ok_pushbutton:hover
+{
+	background-color: #3385ff;
+}
+
+.register_pushbutton
 {
 	background-color: #00b33c;
-	margin-top: 30px;
+
 }
 
-#register_pushbutton:hover
+.register_pushbutton:hover
 {
 	background-color: #00cc44;
 }
 
-#login_pushbutton
+.login_pushbutton
 {
 
-	background-color: #0066ff;
-	margin-top: 30px;
+	background-color: #0066ff;;
 }
 
-#login_pushbutton:hover
-{
-	background-color: #3385ff;
-}
-
-#ok_pushbutton
-{
-	background-color: #0066ff;
-	margin-top: 25px;
-	margin-bottom: 25px;
-}
-
-#ok_pushbutton:hover
+.login_pushbutton:hover
 {
 	background-color: #3385ff;
 }
+
+.delete_pushbutton
+{
+	background-color: #cc0000;
+}
+
+.delete_pushbutton:hover
+{
+	background-color: #e60000;
+}
+
+.btn-modal-ok {background-color: #0066ff; color: white;}
+.btn-modal-ok:hover {background-color: #3385ff; color: white;}
 /*///// /////*/
 
 /*///// NAVBAR /////*/ 
@@ -252,5 +266,18 @@ table td
 {
 	margin-top: 50px;
 	color: #0066ff;
+	
+}
+
+.settings_field
+{
+	margin-top: 20px;
+	border-style: dashed;
+	border-width: 1px;
+	border-radius: 10px;
+	border-color: #0066ff;
+	
+	margin-left: auto;
+	margin-right: auto;
 	
 }

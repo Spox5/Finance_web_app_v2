@@ -47,7 +47,7 @@ class ExpenseModel extends \Core\Model
 	
 	public static function findExpenseCategoryById($id)
 	{
-		$sql = 'SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id = :id';
+		$sql = 'SELECT * FROM expenses_category_assigned_to_users WHERE user_id = :id';
 		$db = static::getDB();
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);

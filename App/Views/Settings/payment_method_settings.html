@@ -42,7 +42,7 @@
 					
 				</div>
 				
-				<form action="/incomesettings/editIncomeCategory" method="post">
+				<form action="/paymentmethodsettings/editPaymentMethodCategory" method="post">
 				
 					<div class="modal-body">
 					
@@ -64,19 +64,19 @@
 
 	<div id="main">
 
-		<div id="title">Kategorie przychodów</div>
+		<div id="title">Kategorie metod płatności</div>
 		
-		<form action="/incomesettings/deleteIncomeCategory" method="post">
+		<form action="/paymentmethodsettings/deletePaymentMethodCategory" method="post">
 		
 			<div class="settings_field">
 			
 				<legend>Istniejące kategorie</legend> 
 				
-				{% for i in incomes_category %}
+				{% for i in payment_methods_category %}
 					<div class="btn-group">
 						
 						<label id="label_{{ i.id }}" class="btn btn-outline-secondary">
-						<input id = "{{ i.id }}" type="radio" name="category" value="{{ i.id }}" data-book-id="{{ i.name }}" required> {{ i.name }}</label>
+						<input id = "{{ i.id }}" type="radio" name="category" value="{{ i.id }}" required> {{ i.payment_name }}</label>
 						
 					</div>
 				{% endfor %}
@@ -91,7 +91,7 @@
 			
 		</form>
 		
-		<form action="/incomesettings/addIncomeCategory" method="post">
+		<form action="/paymentmethodsettings/addPaymentMethodCategory" method="post">
 		
 			<div class="settings_field">
 		
